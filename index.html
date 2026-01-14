@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony Neurocare - Mental Wellness Clinic</title>
+    <meta name="description"
+        content="Harmony Neurocare: A sanctuary for mental wellness offering TMS, medication management, and personalized care.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+    <script type="module" src="hero-bg.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A361E',
+                        accent: '#C55E2A',
+                        'accent-light': '#D66A35',
+                        'soft-green': '#E8EDE4',
+                        'cream': '#F9FAF8',
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                        heading: ['Bauhaus Soft', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Maintain custom animations */
+        /* Custom Animations & Utilities */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.8s all ease;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navbar Glass Transition */
+        .nav-scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        .nav-transparent {
+            background-color: transparent;
+            backdrop-filter: none;
+            box-shadow: none;
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+        }
+
+        /* Magnificent Text Mask (Inverse Filter Effect) */
+        .text-magnificent {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        .text-magnificent::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            color: white;
+            opacity: 0.9;
+            mix-blend-mode: overlay;
+        }
+
+        /* Stacked Gradient Blur (Adapted for Navbar) */
+        .nav-blur-stack {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            /* Cover the navbar container */
+            pointer-events: none;
+        }
+
+        .nav-blur-stack>div,
+        .nav-blur-stack::before,
+        .nav-blur-stack::after {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Subtle white tint per layer */
+        }
+
+        /* 1. Heaviest Blur at Top (using 'to top' masks) */
+        /* ::after - Blur 64px - Top 12.5% */
+        .nav-blur-stack::after {
+            content: "";
+            z-index: 8;
+            backdrop-filter: blur(64px);
+            -webkit-backdrop-filter: blur(64px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 1) 100%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 1) 100%);
+        }
+
+        /* div 6 - Blur 32px - 75-87.5% */
+        .nav-blur-stack>div:nth-of-type(6) {
+            z-index: 7;
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 1) 100%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 1) 100%);
+        }
+
+        /* div 5 - Blur 16px - 62.5-75% */
+        .nav-blur-stack>div:nth-of-type(5) {
+            z-index: 6;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        /* div 4 - Blur 8px - 50-62.5% */
+        .nav-blur-stack>div:nth-of-type(4) {
+            z-index: 5;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 87.5%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 87.5%);
+        }
+
+        /* div 3 - Blur 4px - 37.5-50% */
+        .nav-blur-stack>div:nth-of-type(3) {
+            z-index: 4;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 0) 75%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 0) 75%);
+        }
+
+        /* div 2 - Blur 2px - 25-37.5% */
+        .nav-blur-stack>div:nth-of-type(2) {
+            z-index: 3;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 62.5%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 62.5%);
+        }
+
+        /* div 1 - Blur 1px - 12.5-25% */
+        .nav-blur-stack>div:nth-of-type(1) {
+            z-index: 2;
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 0) 50%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 0) 50%);
+        }
+
+        /* ::before - Blur 0.5px (Cleanest) - 0-12.5% (Bottom) */
+        .nav-blur-stack::before {
+            content: "";
+            z-index: 1;
+            backdrop-filter: blur(0.5px);
+            -webkit-backdrop-filter: blur(0.5px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 37.5%);
+            -webkit-mask: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 37.5%);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!-- Navbar (Split Pill Design with Mega Menu) -->
+    <nav id="main-nav"
+        class="fixed w-full top-0 px-6 md:px-10 lg:px-16 py-6 flex justify-between items-start z-50 transition-all duration-500 bg-transparent group/nav">
+
+        <!-- Navbar Background Layer (Stacked Gradient Blur) -->
+        <div id="nav-bg"
+            class="absolute inset-0 w-full h-full -z-10 transition-opacity duration-500 opacity-0 pointer-events-none">
+            <div class="nav-blur-stack">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+        <!-- Pill 1: Logo -->
+        <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-full px-2 py-2 flex items-center gap-3 cursor-pointer transition-transform hover:scale-105 relative z-50"
+            onclick="window.scrollTo(0,0)">
+            <img src="https://res.cloudinary.com/de4kw1t2i/image/upload/v1768218653/HarmonyNeurocare-PrimaryLogo-Color_p88yte.png"
+                alt="Harmony Neurocare Logo" class="h-10">
+        </div>
+
+        <!-- Pill 2: Mega Menu & Actions -->
+        <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-full px-2 py-2 flex items-center relative z-50">
+
+            <!-- Desktop Mega Menu -->
+            <ul id="nav-menu"
+                class="hidden lg:flex items-center gap-2 font-medium text-sm tracking-wide text-primary px-4">
+
+                <!-- Home -->
+                <li><a href="#"
+                        class="px-4 py-2 rounded-full hover:bg-primary/5 hover:text-accent transition-all duration-300">Home</a>
+                </li>
+
+                <!-- About -->
+                <li class="group relative">
+                    <button
+                        class="px-4 py-2 rounded-full hover:bg-primary/5 hover:text-accent transition-all duration-300 flex items-center gap-1 group-hover:bg-primary/5 group-hover:text-accent relative z-50">
+                        About <svg class="w-3 h-3 transition-transform group-hover:rotate-180 opacity-50" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown (Right Aligned to Pill) -->
+                    <div
+                        class="absolute right-0 top-full mt-6 w-64 bg-white/90 backdrop-blur-[40px] rounded-3xl shadow-[0_50px_100px_-20px_rgba(42,54,30,0.15)] border border-white/40 p-2 opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out origin-top-right z-40 overflow-hidden">
+                        <!-- Bridge -->
+                        <div class="absolute -top-10 left-0 w-full h-10 bg-transparent"></div>
+
+                        <div class="grid grid-cols-1">
+                            <a href="#welcome"
+                                class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/60 transition-colors group/item">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover/item:bg-accent group-hover/item:text-white transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="block text-base font-bold text-primary">Our Mission</span>
+                                    <span class="text-xs text-gray-400">Restoring balance & wellness</span>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/60 transition-colors group/item">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover/item:bg-accent group-hover/item:text-white transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <span class="block text-base font-bold text-primary">Our Team</span>
+                                    <span class="text-xs text-gray-400">Meet the experts</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Services (Epic) -->
+                <li class="group relative">
+                    <button
+                        class="px-4 py-2 rounded-full hover:bg-primary/5 hover:text-accent transition-all duration-300 flex items-center gap-1 group-hover:bg-primary/5 group-hover:text-accent relative z-50">
+                        Services <svg class="w-3 h-3 transition-transform group-hover:rotate-180 opacity-50" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Mega Menu (Right Aligned) -->
+                    <div
+                        class="absolute right-0 top-full mt-6 w-[90vw] max-w-4xl bg-white/95 backdrop-blur-[50px] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(42,54,30,0.15)] border border-white/40 p-3 opacity-0 invisible translate-y-6 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-500 ease-out origin-top-right z-40 overflow-hidden">
+                        <!-- Bridge -->
+                        <div class="absolute -top-10 left-0 w-full h-10 bg-transparent"></div>
+
+                        <div class="flex flex-col md:flex-row h-[400px]">
+                            <!-- Left: Navigation List -->
+                            <div class="w-full md:w-1/3 p-6 flex flex-col gap-2">
+                                <h4 class="px-4 text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Clinical
+                                    Services</h4>
+
+                                <a href="#"
+                                    class="group/item flex items-center justify-between p-4 rounded-3xl bg-primary/5 hover:bg-primary text-primary hover:text-white transition-all duration-300">
+                                    <span class="font-semibold text-base">TMS Therapy</span>
+                                    <svg class="w-5 h-5 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="group/item flex items-center justify-between p-4 rounded-3xl bg-transparent hover:bg-primary text-gray-600 hover:text-white transition-all duration-300">
+                                    <span class="font-semibold text-base">Ketamine + Spravato</span>
+                                    <svg class="w-5 h-5 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="group/item flex items-center justify-between p-4 rounded-3xl bg-transparent hover:bg-primary text-gray-600 hover:text-white transition-all duration-300">
+                                    <span class="font-semibold text-base">Psychiatric Care</span>
+                                    <svg class="w-5 h-5 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Right: Feature Spotlight -->
+                            <div
+                                class="flex-1 bg-[#1a2e1a] rounded-[2.5rem] relative overflow-hidden flex items-end p-10 m-2 group/card">
+                                <!-- Abstract Art -->
+                                <div
+                                    class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent rounded-full blur-[150px] opacity-20 translate-x-1/2 -translate-y-1/2 group-hover/card:opacity-30 transition-opacity duration-700">
+                                </div>
+                                <div
+                                    class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#556B40] rounded-full blur-[100px] opacity-20 -translate-x-1/2 translate-y-1/2">
+                                </div>
+
+                                <div class="relative z-10 text-white max-w-md">
+                                    <div
+                                        class="inline-block px-3 py-1 rounded-full border border-white/20 text-[10px] font-bold uppercase tracking-widest mb-4 bg-white/5 backdrop-blur-sm">
+                                        Featured Treatment</div>
+                                    <h3 class="text-4xl md:text-5xl font-heading mb-4 leading-none text-gray-200">Awaken
+                                        Your<br><span class="text-accent">Potential</span></h3>
+                                    <p class="text-white/60 text-sm mb-8 leading-relaxed">
+                                        Transcranial Magnetic Stimulation (TMS) is a revolution in mental health care.
+                                        Non-invasive, drug-free, and effective.
+                                    </p>
+                                    <a href="#"
+                                        class="inline-flex items-center gap-3 px-8 py-4 bg-white text-primary rounded-full font-bold hover:gap-5 transition-all duration-300">
+                                        Explore TMS Therapy
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Conditions (Ultra Wide) -->
+                <li class="group relative">
+                    <button
+                        class="px-4 py-2 rounded-full hover:bg-primary/5 hover:text-accent transition-all duration-300 flex items-center gap-1 group-hover:bg-primary/5 group-hover:text-accent relative z-50">
+                        Conditions <svg class="w-3 h-3 transition-transform group-hover:rotate-180 opacity-50"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <!-- Mega Menu (Right Aligned) -->
+                    <div
+                        class="absolute right-0 top-full mt-6 w-[95vw] max-w-5xl bg-white/95 backdrop-blur-[50px] rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(42,54,30,0.15)] border border-white/40 p-10 opacity-0 invisible translate-y-6 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-500 ease-out origin-top-right z-40">
+                        <!-- Bridge -->
+                        <div class="absolute -top-10 left-0 w-full h-10 bg-transparent"></div>
+
+                        <div class="flex gap-12">
+
+                            <!-- Sidebar -->
+                            <div
+                                class="w-64 flex-shrink-0 flex flex-col justify-between border-r border-primary/5 pr-8">
+                                <div>
+                                    <h3 class="text-4xl text-primary font-heading mb-4">Find<br>Relief</h3>
+                                    <p class="text-sm text-gray-500 leading-relaxed mb-6">
+                                        Evidence-based treatments tailored to your unique brain and biology.
+                                    </p>
+                                </div>
+                                <a href="#" class="group/link flex items-center gap-2 text-accent font-bold text-sm">
+                                    <span
+                                        class="border-b border-accent/30 group-hover/link:border-accent transition-colors">View
+                                        All Conditions</span>
+                                    <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Grid -->
+                            <div class="flex-1 grid grid-cols-3 gap-8">
+                                <!-- Col 1: Mood -->
+                                <div class="space-y-6">
+                                    <div class="flex items-center gap-3 pb-4 border-b border-primary/5">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <span class="font-bold tracking-widest uppercase text-xs text-primary/60">Mood
+                                            Disorders</span>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                Depression</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                TRD & Major Depressive Disorder</div>
+                                        </a>
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                Bipolar Disorder</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Mood stabilization & support</div>
+                                        </a>
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                Suicidal Ideation</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Check availability for crisis care</div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Col 2: Anxiety -->
+                                <div class="space-y-6">
+                                    <div class="flex items-center gap-3 pb-4 border-b border-primary/5">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                            </svg>
+                                        </div>
+                                        <span
+                                            class="font-bold tracking-widest uppercase text-xs text-primary/60">Anxiety
+                                            & Trauma</span>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                Anxiety</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Generalized & Social Anxiety</div>
+                                        </a>
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                PTSD</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Post-Traumatic Stress recovery</div>
+                                        </a>
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                Trauma</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Healing past wounds</div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Col 3: Focus -->
+                                <div class="space-y-6">
+                                    <div class="flex items-center gap-3 pb-4 border-b border-primary/5">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <span class="font-bold tracking-widest uppercase text-xs text-primary/60">Focus
+                                            & Neuro</span>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                ADHD / ADD</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Focus & cognitive enhancement</div>
+                                        </a>
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                OCD</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Obsessive-Compulsive Disorder</div>
+                                        </a>
+                                        <a href="#" class="block group/item">
+                                            <div
+                                                class="text-lg font-bold text-primary group-hover/item:text-accent transition-colors">
+                                                Addiction</div>
+                                            <div
+                                                class="text-xs text-gray-400 group-hover/item:text-gray-600 transition-colors">
+                                                Recovery support</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Resources (Right Aligned) -->
+                <li class="group relative">
+                    <button
+                        class="px-4 py-2 rounded-full hover:bg-primary/5 hover:text-accent transition-all duration-300 flex items-center gap-1 group-hover:bg-primary/5 group-hover:text-accent relative z-50">
+                        Resources <svg class="w-3 h-3 transition-transform group-hover:rotate-180 opacity-50"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown Panel -->
+                    <div
+                        class="absolute right-0 top-full mt-6 w-64 bg-white/90 backdrop-blur-[40px] rounded-3xl shadow-[0_50px_100px_-20px_rgba(42,54,30,0.15)] border border-white/40 p-2 opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out origin-top-right z-40 overflow-hidden">
+                        <!-- Bridge -->
+                        <div class="absolute -top-10 left-0 w-full h-10 bg-transparent"></div>
+
+                        <div class="grid grid-cols-1">
+                            <a href="#"
+                                class="flex items-center justify-between p-4 rounded-2xl hover:bg-white/60 transition-colors group/item">
+                                <span class="font-bold text-primary">Patient Portal</span>
+                                <svg class="w-4 h-4 text-gray-300 group-hover/item:text-accent transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="flex items-center justify-between p-4 rounded-2xl hover:bg-white/60 transition-colors group/item">
+                                <span class="font-bold text-primary">Our Blog</span>
+                                <svg class="w-4 h-4 text-gray-300 group-hover/item:text-accent transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="flex items-center justify-between p-4 rounded-2xl hover:bg-white/60 transition-colors group/item">
+                                <span class="font-bold text-primary">Global FAQ</span>
+                                <svg class="w-4 h-4 text-gray-300 group-hover/item:text-accent transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="flex items-center justify-between p-4 rounded-2xl hover:bg-white/60 transition-colors group/item">
+                                <span class="font-bold text-primary">Pricing</span>
+                                <svg class="w-4 h-4 text-gray-300 group-hover/item:text-accent transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Book Now Button -->
+            <a href="#contact" id="nav-cta"
+                class="px-6 py-2.5 bg-primary text-white rounded-full font-bold hover:bg-accent transition-all duration-300 shadow-md flex items-center gap-2 ml-2 hover:scale-105 active:scale-95">
+                <span>Book Consult</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                    </path>
+                </svg>
+            </a>
+
+            <!-- Mobile Hamburger (Inside the pill) -->
+            <div id="nav-hamburger" class="lg:hidden flex flex-col gap-1.5 cursor-pointer group px-4 py-2">
+                <span class="line w-6 h-0.5 bg-primary transition-all duration-300 group-hover:w-4 ml-auto"></span>
+                <span class="line w-4 h-0.5 bg-primary transition-all duration-300 group-hover:w-6 ml-auto"></span>
+                <span class="line w-5 h-0.5 bg-primary transition-all duration-300 group-hover:w-5 ml-auto"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Epic & Innovative Redesign) -->
+    <header class="relative h-[65vh] min-h-[500px] flex items-center overflow-hidden mx-6 mb-6 rounded-b-[3rem] mt-0"
+        id="home">
+        <!-- Three.js Canvas Container -->
+        <div id="hero-canvas" class="absolute inset-0 z-0 scale-100"></div>
+
+        <!-- Decoration: Noise Overlay (Optional Texture) -->
+        <div
+            class="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0MDAnIGhlaWdodD0nNDAwJz48ZmlsdGVyIGlkPSdub2lzZSc+PGZlVHVyYnVsZW5jZSB0eXBlPSdmcmFjdGFsTm9pc2UnIGJhc2VGcmVxdWVuY3k9JzAuNjUnIG51bW9jdGF2ZXM9JzMnIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWx0ZXI9J3VybCgjbm9pc2UpJyBvcGFjaXR5PScwLjQnLz48L3N2Zz4=')]">
+        </div>
+
+        <!-- Gradient Overlay for Text Readability -->
+        <!-- <div
+            class="absolute inset-0 z-0 bg-gradient-to-r from-primary/80 via-primary/30 to-transparent pointer-events-none mix-blend-multiply">
+        </div> -->
+
+        <!-- Hero Content -->
+        <div class="container mx-auto px-6 relative z-10 mt-16">
+            <div class="max-w-3xl fade-in-section">
+                <!-- Badge -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-sm font-medium mb-8 animate-pulse">
+                    <span class="w-2 h-2 rounded-full bg-accent"></span>
+                    Accepting New Patients for 2026
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl leading-[1.1] text-white mb-8"
+                    style="font-family: 'Bauhaus Soft', cursive;">
+                    Harmonizing <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">Mind &
+                        Brain</span>
+                </h1>
+
+                <!-- Subtitle with Glass Card Effect -->
+                <p class="text-xl md:text-2xl text-gray-200 font-light mb-10 max-w-2xl leading-relaxed">
+                    Advanced mental wellness & TMS therapy. Restoring balance through the perfect synthesis of science
+                    and compassion.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#welcome"
+                        class="px-8 py-4 bg-accent text-white rounded-full font-bold text-lg shadow-[0_0_20px_rgba(197,94,42,0.5)] hover:bg-accent-light hover:shadow-[0_0_30px_rgba(197,94,42,0.7)] hover:-translate-y-1 transition-all text-center">
+                        Begin Your Journey
+                    </a>
+                    <a href="#tms"
+                        class="px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 text-white rounded-full font-bold text-lg hover:bg-white/20 hover:border-white/40 transition-all text-center flex items-center justify-center gap-2 group">
+                        <span>Explore Treatment</span>
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <!-- <div
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 animate-bounce">
+            <span class="text-xs uppercase tracking-widest">Scroll</span>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div> -->
+
+        <!-- Decorative Abstract Blur (Bottom Right) -->
+        <div
+            class="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-primary/50 to-transparent blur-[120px] pointer-events-none">
+        </div>
+    </header>
+
+    <!-- Welcome Section (Compact Redesign) -->
+    <section id="welcome" class="relative py-16 bg-cream overflow-hidden">
+        <!-- Preserved Blob Background -->
+        <div class="blob-bg absolute top-0 left-0 w-full h-full pointer-events-none opacity-40"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+
+                <!-- Text Content -->
+                <div class="fade-in-section order-2 md:order-1">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs mb-2 block">A Sanctuary for
+                        Healing</span>
+                    <h2 class="text-5xl md:text-6xl text-primary mb-6" style="font-family: 'Bauhaus Soft', cursive;">
+                        Welcome to Harmony</h2>
+
+                    <p class="text-lg text-primary/80 font-medium mb-4 leading-snug">
+                        Where science meets serenity. We believe mental wellness is a journey best taken with
+                        compassionate guides.
+                    </p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-8">
+                        At Harmony Neurocare, our clinic provides a serene environment where advanced technology meets
+                        compassionate care. We are dedicated to restoring balance to your life.
+                    </p>
+                    <a href="#contact"
+                        class="inline-block px-8 py-4 bg-accent text-white rounded-full font-bold shadow-lg hover:bg-accent-light transition-all hover:-translate-y-1 text-lg">
+                        Our Philosophy
+                    </a>
+                </div>
+
+                <!-- Image Content -->
+                <div class="fade-in-section order-1 md:order-2 flex justify-center md:justify-end">
+                    <div class="image-wrapper organic-shape w-full max-w-sm">
+                        <img src="assets/clinic.png" alt="Peaceful Clinic Interior" class="block w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is TMS (Compact & Innovative Redesign) -->
+    <section id="tms" class="py-20 relative bg-cover bg-center bg-fixed"
+        style="background-image: url('https://images.unsplash.com/photo-1763652387618-556b98d819bb?q=80&w=2531&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+        <div class="absolute inset-0"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div
+                class="bg-white/60 backdrop-blur-md rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-white/50 overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Text Content -->
+                    <div class="fade-in-section">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span
+                                class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold tracking-widest uppercase rounded-full">FDA
+                                Cleared</span>
+                            <span
+                                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase rounded-full">Non-Invasive</span>
+                        </div>
+                        <h2 class="text-4xl md:text-5xl text-primary mb-6"
+                            style="font-family: 'Bauhaus Soft', cursive;">Healing at the Source</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                            TMS uses gentle magnetic pulses to <span class="text-accent font-bold">reactivate</span>
+                            dormant neural pathways. It's not just treating symptoms—it's physically waking up your
+                            brain's ability to regulate mood.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="bg-white/80 p-4 rounded-2xl border border-white shadow-sm">
+                                <div class="text-3xl font-bold text-primary mb-1"
+                                    style="font-family: 'Bauhaus Soft', cursive;">80%</div>
+                                <div class="text-xs text-gray-600 uppercase tracking-wide font-semibold">Response Rate
+                                </div>
+                            </div>
+                            <div class="bg-white/80 p-4 rounded-2xl border border-white shadow-sm">
+                                <div class="text-3xl font-bold text-accent mb-1"
+                                    style="font-family: 'Bauhaus Soft', cursive;">50%</div>
+                                <div class="text-xs text-gray-600 uppercase tracking-wide font-semibold">Full Remission
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="#contact"
+                            class="inline-flex items-center gap-2 text-primary font-bold hover:text-accent transition-colors group">
+                            Check if you qualify
+                            <span
+                                class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-md group-hover:bg-accent group-hover:text-white transition-all">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+
+                    <!-- Brain Comparison Visual -->
+                    <div class="relative fade-in-section">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-accent/20 to-primary/5 rounded-3xl blur-xl">
+                        </div>
+
+                        <!-- Placeholder Image -->
+                        <img src="assets/bef-aft.webp" alt="Brain Activity Comparison"
+                            class="w-full h-auto rounded-2xl">
+
+
+
+                        <p class="text-center text-xs text-primary/60 mt-4 font-medium italic">Visualization of neural
+                            activity increases after TMS treatment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why It Helps (Compact & High Contrast) -->
+    <section id="why-it-helps" class="py-16 bg-primary text-white relative overflow-hidden">
+        <!-- Abstract Background Detail -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-40 pointer-events-none">
+            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="themeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#2A361E;stop-opacity:1" /> <!-- Primary Green -->
+                        <stop offset="100%" style="stop-color:#C55E2A;stop-opacity:1" /> <!-- Accent Orange -->
+                    </linearGradient>
+                </defs>
+                <path d="M0 100 C 20 0 50 0 100 100 Z" fill="url(#themeGradient)" />
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 fade-in-section gap-6">
+                <div class="max-w-xl">
+                    <h2 class="text-4xl md:text-5xl mb-4 leading-tight text-white"
+                        style="font-family: 'Bauhaus Soft', cursive;">Restoring <span class="text-accent">Balance</span>
+                    </h2>
+                    <p class="text-gray-100 text-lg leading-relaxed">Depression is a biological condition that
+                        physically alters brain function. TMS targets these changes directly.</p>
+                </div>
+                <div class="hidden md:block pb-2">
+                    <div class="h-px w-32 bg-accent/50"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="group fade-in-section">
+                    <div
+                        class="relative overflow-hidden rounded-2xl aspect-video mb-5 bg-white/10 border border-white/20 group-hover:border-accent/50 transition-colors">
+                        <!-- Image Placeholder -->
+                        <img src="assets/rb-precision.png" alt="Precision Targeting Visual"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                        <div
+                            class="absolute top-4 left-4 w-8 h-8 rounded-full border border-white/30 flex items-center justify-center font-bold text-sm bg-black/40 backdrop-blur-md text-white">
+                            1</div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-accent transition-colors"
+                            style="font-family: 'Bauhaus Soft', cursive;">Precision</h3>
+                        <p
+                            class="text-gray-100 text-sm leading-relaxed border-l-2 border-white/20 pl-4 group-hover:border-accent/50 transition-colors">
+                            Unlike medications that circulate throughout your entire body, TMS uses focused magnetic
+                            fields to target only the specific neural circuits involved in mood regulation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group fade-in-section" style="transition-delay: 100ms;">
+                    <div
+                        class="relative overflow-hidden rounded-2xl aspect-video mb-5 bg-white/10 border border-white/20 group-hover:border-accent/50 transition-colors">
+                        <!-- Image Placeholder -->
+                        <img src="assets/rb-awakening.png" alt="Neuroplasticity Visual"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                        <div
+                            class="absolute top-4 left-4 w-8 h-8 rounded-full border border-white/30 flex items-center justify-center font-bold text-sm bg-black/40 backdrop-blur-md text-white">
+                            2</div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-accent transition-colors"
+                            style="font-family: 'Bauhaus Soft', cursive;">Awakening</h3>
+                        <p
+                            class="text-gray-100 text-sm leading-relaxed border-l-2 border-white/20 pl-4 group-hover:border-accent/50 transition-colors">
+                            Think of it as physical therapy for the brain. The pulses "wake up" underactive neurons,
+                            encouraging them to fire again and rebuild vital connections.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group fade-in-section" style="transition-delay: 200ms;">
+                    <div
+                        class="relative overflow-hidden rounded-2xl aspect-video mb-5 bg-white/10 border border-white/20 group-hover:border-accent/50 transition-colors">
+                        <!-- Image Placeholder -->
+                        <img src="assets/rb-longevity.png" alt="Long-term Relief Visual"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                        <div
+                            class="absolute top-4 left-4 w-8 h-8 rounded-full border border-white/30 flex items-center justify-center font-bold text-sm bg-black/40 backdrop-blur-md text-white">
+                            3</div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-accent transition-colors"
+                            style="font-family: 'Bauhaus Soft', cursive;">Longevity</h3>
+                        <p
+                            class="text-gray-100 text-sm leading-relaxed border-l-2 border-white/20 pl-4 group-hover:border-accent/50 transition-colors">
+                            Because it changes how the brain functions physically, the results are often durable. Many
+                            patients experience remission that lasts long after treatment concludes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conditions (Compact & Concise) -->
+    <section id="conditions" class="py-16 relative overflow-hidden bg-cover bg-center"
+        style="background-image: url('assets/bg2.jpg');">
+        <!-- Gradient Blur Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/90 pointer-events-none z-0">
+        </div>
+
+        <div class="container mx-auto relative z-10">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 fade-in-section gap-8">
+                <div>
+                    <h2 class="text-3xl md:text-5xl text-primary mb-2" style="font-family: 'Bauhaus Soft', cursive;">
+                        Healing <span class="text-accent">Spectrum</span></h2>
+                    <p class="text-gray-500 text-lg max-w-2xl">Specialized care for conditions where neural pathways
+                        need realignment.</p>
+                </div>
+                <div class="hidden md:block">
+                    <a href="#contact"
+                        class="text-accent font-bold text-sm tracking-widest hover:text-primary transition-colors flex items-center gap-2 group">
+                        START ASSESSMENT
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-8">
+                <!-- Depression -->
+                <div
+                    class="group border-2 border-accent/5 fade-in-section w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] bg-accent/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <div
+                        class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">Depression
+                    </h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Treatment-Resistant focus. Lifting the persistent
+                        fog and restoring emotional vitality.</p>
+                </div>
+
+                <!-- Anxiety -->
+                <div class="group border-2 border-accent/5 fade-in-section w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] bg-accent/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+                    style="transition-delay: 50ms;">
+                    <div
+                        class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">Anxiety
+                    </h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Generalized Anxiety, Panic Disorder & Social
+                        Anxiety. Reclaiming your calm confident self.</p>
+                </div>
+
+                <!-- OCD -->
+                <div class="group border-2 border-accent/5 fade-in-section w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] bg-accent/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+                    style="transition-delay: 100ms;">
+                    <div
+                        class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">OCD</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Obsessive-Compulsive Disorder. Breaking the loop of
+                        intrusive thoughts effectively.</p>
+                </div>
+
+                <!-- PTSD -->
+                <div class="group border-2 border-accent/5 fade-in-section w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] bg-accent/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+                    style="transition-delay: 150ms;">
+                    <div
+                        class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">PTSD</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Healing trauma at the physiological level to
+                        restore safety and peace.</p>
+                </div>
+
+                <!-- ADHD -->
+                <div class="group border-2 border-accent/5 fade-in-section w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] bg-accent/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+                    style="transition-delay: 200ms;">
+                    <div
+                        class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">ADHD</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Focus enhancement and executive function support.
+                    </p>
+                </div>
+
+                <!-- Bipolar -->
+                <div class="group border-2 border-accent/5 fade-in-section w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] bg-accent/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+                    style="transition-delay: 250ms;">
+                    <div
+                        class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-accent group-hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors">Bipolar
+                    </h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Mood stabilization and emotional regulation
+                        therapy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div>
+    </div>
+    </section>
+
+    <!-- Meet Rosana (Light Theme Redesign) -->
+    <section id="founder" class="pb-10 bg-white relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-[#F5F7F4] transform skew-x-12 origin-top-right -z-10"></div>
+        <div class="absolute bottom-0 left-10 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+                <!-- Image Composition (Left) -->
+                <div class="w-full lg:w-5/12 fade-in-section relative group">
+                    <!-- Frame -->
+                    <div
+                        class="absolute inset-0 border border-primary/10 rounded-tl-[4rem] rounded-br-[4rem] transform translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500">
+                    </div>
+                    <!-- Image -->
+                    <div
+                        class="relative rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-700">
+                        <img src="assets/rosana.JPG" alt="Rosana Graves, CEO"
+                            class="w-full h-auto object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700  max-h-[600px] grayscale-0">
+
+                        <!-- Badge -->
+                        <!-- <div
+                            class="absolute bottom-6 right-6 bg-white/80 backdrop-blur-md border border-white/40 p-4 rounded-xl shadow-lg">
+                            <div class="text-accent text-3xl font-serif"></div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Text Content (Right) -->
+                <div class="w-full lg:w-7/12 text-primary fade-in-section">
+                    <div class="mb-4 flex items-center gap-4">
+                        <span class="h-px w-12 bg-accent"></span>
+                        <span class="text-accent font-bold tracking-[0.2em] uppercase text-xs">Visionary
+                            Leadership</span>
+                    </div>
+
+                    <h2 class="text-6xl text-primary mb-4" style="font-family: 'Bauhaus Soft', cursive;">Rosana Graves
+                    </h2>
+                    <p class="text-xl text-gray-500 font-light mb-10 italic font-serif">Founder & CEO</p>
+
+                    <!-- Quote Box -->
+                    <div
+                        class="relative bg-[#F5F7F4] border-l-4 border-accent p-8 mb-10 rounded-r-2xl hover:bg-[#E8EDE4] transition-colors duration-300">
+                        <p class="text-lg md:text-xl text-primary/80 leading-relaxed font-light">
+                            "I founded Harmony Neurocare with a simple belief: that every patient deserves to feel truly
+                            heard. Combining clinical expertise with deep compassion, we've created a space where
+                            healing is not just a medical procedure, but a human experience."
+                        </p>
+                    </div>
+
+                    <!-- Credentials -->
+                    <div
+                        class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-8 border-t border-gray-100 pt-8">
+                        <div>
+                            <h4 class="text-primary font-bold text-lg mb-3">Clinical Focus</h4>
+                            <ul class="space-y-2 text-gray-500 text-sm">
+                                <li class="flex items-center gap-3"><span
+                                        class="w-1.5 h-1.5 rounded-full bg-accent"></span>Integrative Psychiatry</li>
+                                <li class="flex items-center gap-3"><span
+                                        class="w-1.5 h-1.5 rounded-full bg-accent"></span>TMS Specialist</li>
+                                <li class="flex items-center gap-3"><span
+                                        class="w-1.5 h-1.5 rounded-full bg-accent"></span>Patient Advocacy</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BrainsWay SWIFT (New CTA Section) -->
+    <section id="swift-offer" class="py-10 relative overflow-hidden bg-[#1a2e1a] text-white">
+        <!-- Background Elements -->
+        <div
+            class="absolute top-0 right-0 w-[600px] h-[600px] bg-accent rounded-full blur-[120px] opacity-10 translate-x-1/2 -translate-y-1/2 pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#91a080] rounded-full blur-[100px] opacity-10 -translate-x-1/3 translate-y-1/3 pointer-events-none">
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+
+                <!-- Left Content: The Pitch (More Compact) -->
+                <div class="lg:w-5/12 fade-in-section">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/30 bg-accent/5 text-accent font-medium text-[10px] tracking-[0.2em] uppercase mb-6 backdrop-blur-md">
+                        <span class="w-1 h-1 rounded-full bg-accent animate-pulse"></span>
+                        New Accelerated Protocol
+                    </div>
+
+                    <h2 class="text-4xl md:text-5xl mb-4 leading-tight text-white/95"
+                        style="font-family: 'Bauhaus Soft', cursive;">
+                        Hope <span class="font-light italic text-white/60">in a hurry.</span>
+                    </h2>
+
+                    <p class="text-base text-gray-400 mb-8 leading-relaxed font-light">
+                        The FDA-cleared <strong>SWIFT Protocol</strong> condenses a month of therapy into just 6 days.
+                        Fast-track your path to relief without compromising on care.
+                    </p>
+
+                    <div class="flex items-center gap-6">
+                        <a href="#contact"
+                            class="px-8 py-3 bg-accent text-white rounded-full text-sm font-bold hover:bg-accent-light transition-all shadow-lg shadow-accent/20 flex items-center gap-2 group">
+                            Inquire Now
+                            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                        <p class="text-[10px] text-white/30 uppercase tracking-wider">*Self-pay eligible</p>
+                    </div>
+                </div>
+
+                <!-- Right Content: The Stats (Horizontal Strip) -->
+                <div class="lg:w-7/12 w-full fade-in-section">
+                    <div
+                        class="bg-white/[0.02] border border-white/5 backdrop-blur-md rounded-3xl p-2 flex flex-col md:flex-row gap-2">
+
+                        <!-- Block 1: Time -->
+                        <div
+                            class="flex-1 bg-white/[0.03] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors border border-transparent hover:border-white/5 group">
+                            <div class="flex items-center justify-between mb-2">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/80">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] uppercase tracking-widest text-accent font-bold">Duration</span>
+                            </div>
+                            <div class="text-3xl text-white mb-1" style="font-family: 'Bauhaus Soft', cursive;">6 Days
+                            </div>
+                            <p class="text-xs text-gray-500 font-light leading-snug">Complete 30 sessions in less than a
+                                week.</p>
+                        </div>
+
+                        <!-- Block 2: Price -->
+                        <div
+                            class="flex-1 bg-white/[0.03] rounded-2xl p-5 hover:bg-white/[0.05] transition-colors border border-transparent hover:border-white/5 group">
+                            <div class="flex items-center justify-between mb-2">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] uppercase tracking-widest text-accent font-bold">Total
+                                    Cost</span>
+                            </div>
+                            <div class="text-3xl text-white mb-1" style="font-family: 'Bauhaus Soft', cursive;">$4,900
+                            </div>
+                            <p class="text-xs text-gray-500 font-light leading-snug">Transparent flat rate. No hidden
+                                fees.</p>
+                        </div>
+
+                        <!-- Block 3: Efficacy -->
+                        <div
+                            class="flex-1 bg-gradient-to-br from-white/[0.05] to-transparent rounded-2xl p-5 border border-white/10 group relative overflow-hidden">
+                            <div
+                                class="absolute right-0 top-0 w-24 h-24 bg-accent/10 rounded-full blur-[40px] -mr-8 -mt-8 group-hover:bg-accent/20 transition-all">
+                            </div>
+                            <div class="flex items-center justify-between mb-2 relative z-10">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span
+                                    class="text-[9px] uppercase tracking-widest text-green-400 font-bold border border-green-500/20 px-1.5 py-0.5 rounded-full">FDA
+                                    Cleared</span>
+                            </div>
+                            <div class="text-xl text-white mb-1 mt-1 leading-tight font-medium">Clinical<br>Strength
+                            </div>
+                            <p class="text-xs text-gray-500 font-light leading-snug mt-1">Effectiveness comparable to
+                                standard Deep TMS.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ (Serene & Professional Redesign) -->
+    <section id="faq" class="py-16 relative bg-[#F5F7F4] overflow-hidden">
+        <!-- Decor: Theme Orange Gradients -->
+        <div
+            class="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none">
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+
+                <!-- Left Column: Heading & Visual -->
+                <div class="lg:col-span-5 flex flex-col gap-10 sticky top-32 fade-in-section">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-px w-12 bg-primary/40"></span>
+                            <span class="text-primary/60 font-bold tracking-widest uppercase text-xs">Clarity &
+                                Comfort</span>
+                        </div>
+                        <h2 class="text-5xl md:text-6xl text-primary mb-6 leading-tight"
+                            style="font-family: 'Bauhaus Soft', cursive;">Common <br>Questions</h2>
+                        <p class="text-gray-600 text-lg leading-relaxed">
+                            Embarking on a new treatment path can raise many questions. We are here to provide
+                            transparent, scientifically-backed answers to help you feel confident in your care.
+                        </p>
+                    </div>
+
+
+                </div>
+
+                <!-- Right Column: Accordion -->
+                <div class="lg:col-span-7 flex flex-col gap-4 pt-4 fade-in-section">
+
+                    <!-- Item 1 -->
+                    <div class="border-b border-primary/10 overflow-hidden group">
+                        <button
+                            class="accordion-header w-full py-4 text-left flex justify-between items-center bg-transparent hover:text-accent transition-colors">
+                            <span class="text-lg font-bold text-primary group-hover:text-accent transition-colors">Is
+                                TMS therapy painful?</span>
+                            <div
+                                class="relative w-6 h-6 flex items-center justify-center transform transition-transform duration-300 group-[.active]:rotate-90">
+                                <svg class="w-5 h-5 text-primary group-hover:text-accent transition-colors" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            <div class="pb-6 text-gray-600 leading-relaxed text-base max-w-3xl">
+                                Most patients report a mild tapping sensation on the scalp resembling a woodpecker
+                                tapping. It is generally not painful, requires no anesthesia, and you can drive yourself
+                                home immediately after each session.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="border-b border-primary/10 overflow-hidden group">
+                        <button
+                            class="accordion-header w-full py-4 text-left flex justify-between items-center bg-transparent hover:text-accent transition-colors">
+                            <span class="text-lg font-bold text-primary group-hover:text-accent transition-colors">Does
+                                insurance cover TMS?</span>
+                            <div
+                                class="relative w-6 h-6 flex items-center justify-center transform transition-transform duration-300 group-[.active]:rotate-90">
+                                <svg class="w-5 h-5 text-primary group-hover:text-accent transition-colors" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            <div class="pb-6 text-gray-600 leading-relaxed text-base max-w-3xl">
+                                Yes, most major insurance providers (including Medicare, Blue Cross, United, and Aetna)
+                                cover TMS for Treatment-Resistant Depression. Our care coordinators handle the entire
+                                pre-authorization process for you to ensure seamless coverage.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="border-b border-primary/10 overflow-hidden group">
+                        <button
+                            class="accordion-header w-full py-4 text-left flex justify-between items-center bg-transparent hover:text-accent transition-colors">
+                            <span class="text-lg font-bold text-primary group-hover:text-accent transition-colors">How
+                                long does a course take?</span>
+                            <div
+                                class="relative w-6 h-6 flex items-center justify-center transform transition-transform duration-300 group-[.active]:rotate-90">
+                                <svg class="w-5 h-5 text-primary group-hover:text-accent transition-colors" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            <div class="pb-6 text-gray-600 leading-relaxed text-base max-w-3xl">
+                                A standard course typically involves daily sessions (Mon-Fri) for about 6 weeks,
+                                followed by a 3-week tapering phase. Each session lasts between 19 to 37 minutes,
+                                integrating perfectly into your daily routine.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 (New) -->
+                    <div class="border-b border-primary/10 overflow-hidden group">
+                        <button
+                            class="accordion-header w-full py-4 text-left flex justify-between items-center bg-transparent hover:text-accent transition-colors">
+                            <span class="text-lg font-bold text-primary group-hover:text-accent transition-colors">Are
+                                there any side effects?</span>
+                            <div
+                                class="relative w-6 h-6 flex items-center justify-center transform transition-transform duration-300 group-[.active]:rotate-90">
+                                <svg class="w-5 h-5 text-primary group-hover:text-accent transition-colors" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            <div class="pb-6 text-gray-600 leading-relaxed text-base max-w-3xl">
+                                TMS is extremely well-tolerated. The most common side effect is mild scalp discomfort
+                                during the first few sessions, which typically resolves quickly. Unlike medications,
+                                there are no systemic side effects like weight gain, drowsiness, or sexual dysfunction.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact (Your Path Forward) -->
+    <section id="contact" class="py-10 relative bg-[#F9FAF8] overflow-hidden">
+        <!-- Subtle Ambient Background -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-[#E8EDE4]/50 rounded-full blur-[120px]">
+            </div>
+            <div class="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-[100px]">
+            </div>
+        </div>
+
+        <div class=" container px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+                <!-- Left Column: Content & Benefits -->
+                <div class="fade-in-section lg:sticky lg:top-32">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="h-px w-12 bg-primary/40"></span>
+                        <span class="text-primary/60 font-bold tracking-widest uppercase text-xs">Frequently Asked
+                            Questions</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl text-primary mb-8 leading-none"
+                        style="font-family: 'Bauhaus Soft', cursive;">Your Path Forward <br>Starts Here</h2>
+                    <p class="text-lg text-gray-600 mb-10 leading-relaxed font-light">
+                        Schedule a Complimentary Discovery Call. During this no-obligation consultation, we’ll:
+                    </p>
+
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <svg class="w-6 h-6 text-accent flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-primary/80 text-lg">Listen to your unique experience</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <svg class="w-6 h-6 text-accent flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-primary/80 text-lg">Explain how TMS might help your specific
+                                condition</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <svg class="w-6 h-6 text-accent flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-primary/80 text-lg">Answer all your questions about treatment</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <svg class="w-6 h-6 text-accent flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-primary/80 text-lg">Discuss practical matters like insurance and
+                                scheduling</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Column: Form -->
+                <div
+                    class="fade-in-section bg-white p-8 md:p-10 rounded-2xl shadow-xl shadow-accent/5 border border-primary/5">
+                    <form class="space-y-6">
+                        <!-- Name Row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-primary block tracking-wide">First Name *</label>
+                                <input type="text" placeholder="First Name"
+                                    class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all placeholder-gray-300 text-primary">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-primary block tracking-wide">Last Name *</label>
+                                <input type="text" placeholder="Last Name"
+                                    class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all placeholder-gray-300 text-primary">
+                            </div>
+                        </div>
+
+                        <!-- Email/Phone Row -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-primary block tracking-wide">Email *</label>
+                                <input type="email" placeholder="Email"
+                                    class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all placeholder-gray-300 text-primary">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-primary block tracking-wide">Phone</label>
+                                <input type="tel" placeholder="Phone"
+                                    class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all placeholder-gray-300 text-primary">
+                            </div>
+                        </div>
+
+                        <!-- Condition -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-primary block tracking-wide">Condition We Are
+                                Treating</label>
+                            <input type="text" placeholder="Condition We Are Treating"
+                                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all placeholder-gray-300 text-primary">
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-primary block tracking-wide">Comments</label>
+                            <textarea rows="4" placeholder="Comments"
+                                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all placeholder-gray-300 text-primary resize-y"></textarea>
+                        </div>
+
+                        <!-- Consent Checkbox -->
+                        <div class="flex items-start gap-3">
+                            <div class="flex items-center h-5 mt-1">
+                                <input id="consent" type="checkbox"
+                                    class="w-4 h-4 text-accent border-2 border-gray-300 rounded focus:ring-accent focus:ring-offset-0 cursor-pointer">
+                            </div>
+                            <label for="consent"
+                                class="text-xs text-gray-500 leading-relaxed cursor-pointer select-none text-justify">
+                                I consent to receive SMS notifications, alerts from Harmony Neurocare. Message frequency
+                                varies. Message & data rates may apply. Text HELP to 720-410-6741 for assistance. You
+                                can reply STOP to unsubscribe at any time. No mobile information will be shared with
+                                third parties/affiliates for marketing/promotional purposes. All the above categories
+                                exclude text messaging originator opt-in data and consent; this information will not be
+                                shared with any third parties.
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="button"
+                            class="w-full py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg shadow-primary/20 transform active:scale-[0.99] transition-all text-lg tracking-wide mt-2">
+                            Schedule a Complimentary Discovery Call
+                        </button>
+
+                        <!-- Links -->
+                        <div class="flex justify-center gap-4 text-xs text-gray-400 mt-4">
+                            <a href="#"
+                                class="hover:text-accent transition-colors underline decoration-gray-300 hover:decoration-accent">Privacy
+                                Policy</a>
+                            <a href="#"
+                                class="hover:text-accent transition-colors underline decoration-gray-300 hover:decoration-accent">Terms
+                                of Service</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer ('The Obsidian Dock' - Polished) -->
+    <footer class="relative mt-0  z-0">
+        <!-- Background Transition -->
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white to-[#081208] -z-20"></div>
+
+        <div
+            class="bg-[#081208] text-white rounded-t-[3rem] relative overflow-hidden shadow-2xl border-t border-white/10 mx-2 md:mx-6 pb-8">
+
+            <!-- Background: Abstract Neuro-Network -->
+            <div class="absolute inset-0 opacity-20 pointer-events-none">
+                <div
+                    class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent">
+                </div>
+                <div
+                    class="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2">
+                </div>
+            </div>
+
+            <!-- Marquee Strip (Polished) -->
+            <div class="w-full bg-white/[0.02] border-b border-white/5 py-3 overflow-hidden flex relative z-10">
+                <div
+                    class="animate-marquee whitespace-nowrap flex gap-12 items-center text-[10px] font-bold tracking-[0.4em] text-white/20 uppercase select-none">
+                    <span>Healing</span> <span class="text-accent/50">•</span>
+                    <span>Science</span> <span class="text-accent/50">•</span>
+                    <span>Compassion</span> <span class="text-accent/50">•</span>
+                    <span>Technology</span> <span class="text-accent/50">•</span>
+                    <span>Wellness</span> <span class="text-accent/50">•</span>
+                    <span>Innovation</span> <span class="text-accent/50">•</span>
+                    <span>Harmony</span> <span class="text-accent/50">•</span>
+                    <span>Restoration</span> <span class="text-accent/50">•</span>
+                    <span>Balance</span> <span class="text-accent/50">•</span>
+                    <span>Healing</span> <span class="text-accent/50">•</span>
+                    <span>Science</span> <span class="text-accent/50">•</span>
+                    <span>Compassion</span> <span class="text-accent/50">•</span>
+                    <span>Technology</span> <span class="text-accent/50">•</span>
+                    <span>Wellness</span> <span class="text-accent/50">•</span>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-6 py-12 relative z-10">
+
+                <!-- The Control Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+
+                    <!-- Widget 1: Brand & Identity (Col Span 5) -->
+                    <div
+                        class="md:col-span-12 lg:col-span-5 flex flex-col justify-between bg-white/[0.03] border border-white/5 p-8 rounded-3xl backdrop-blur-sm group hover:border-white/10 transition-colors">
+                        <div class="mb-10">
+                            <img src="https://res.cloudinary.com/de4kw1t2i/image/upload/v1768218653/HarmonyNeurocare-StackedLogo-Reversed_o3dvw4.png"
+                                alt="Harmony Neurocare Logo" class="w-36 opacity-90 mb-6">
+                            <h3 class="text-2xl font-light text-start leading-snug text-white/80 max-w-sm">
+                                Realigning the <span class="text-accent italic">rhythms</span> of the mind.
+                            </h3>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <!-- Social Orbs (SVGs) -->
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-white transition-all text-white/60">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.072 3.252.148 4.771 1.691 4.919 4.919.06 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-white transition-all text-white/60">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-white transition-all text-white/60">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Widget 2: Navigation Hub (Col Span 4) -->
+                    <div
+                        class="md:col-span-8 lg:col-span-4 bg-white/[0.03] border border-white/5 p-8 rounded-3xl backdrop-blur-sm relative overflow-hidden group hover:border-white/10 transition-colors">
+                        <div
+                            class="absolute top-4 right-4 text-[9px] text-white/20 font-mono tracking-widest uppercase text-start">
+                            Navigation Protocol</div>
+
+                        <div class="grid grid-cols-2 gap-y-3 gap-x-8 mt-4">
+                            <div class="space-y-3 ">
+                                <h4 class="text-[10px] font-bold text-accent uppercase tracking-widest mb-3 opacity-80">
+                                    Explore</h4>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">About
+                                    Us</a>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">Our
+                                    Team</a>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">Careers</a>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">Blog</a>
+                            </div>
+                            <div class="space-y-3">
+                                <h4 class="text-[10px] font-bold text-accent uppercase tracking-widest mb-3 opacity-80">
+                                    Clinical</h4>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">TMS
+                                    Therapy</a>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">Ketamine</a>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">Conditions</a>
+                                <a href="#"
+                                    class="block text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all">Referrals</a>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-white/5">
+                            <a href="#" class="flex justify-between items-center group/link">
+                                <span
+                                    class="text-sm font-bold text-white/80 group-hover/link:text-white transition-colors">Patient
+                                    Portal</span>
+                                <svg class="w-4 h-4 text-accent transform group-hover/link:translate-x-1 transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Widget 3: Action & Location (Col Span 3) -->
+                    <div class="md:col-span-4 lg:col-span-3 flex flex-col gap-4">
+
+                        <!-- Location Card -->
+                        <div
+                            class="flex-1 bg-white/[0.03] border border-white/5 p-6 rounded-3xl backdrop-blur-sm flex flex-col justify-center relative group hover:bg-white/[0.05] transition-colors">
+                            <!-- Glowing Beacon -->
+                            <div
+                                class="absolute top-6 right-6 w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse">
+                            </div>
+
+                            <h4 class="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Denver Clinic
+                            </h4>
+                            <p class="text-sm text-white/80 leading-relaxed">
+                                123 Wellness Blvd, Ste 200<br>
+                                Serenity City, CO 80203
+                            </p>
+                            <a href="tel:+15551234567"
+                                class="mt-4 text-accent font-bold text-lg hover:text-white transition-colors">
+                                (555) 123-4567
+                            </a>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <a href="#contact"
+                            class="flex-1 bg-accent hover:bg-accent-light p-6 rounded-3xl flex items-center justify-between group transition-all shadow-lg shadow-accent/20">
+                            <div>
+                                <div
+                                    class="text-[10px] font-bold text-start text-white/60 uppercase tracking-widest mb-1">
+                                    Start
+                                    Now</div>
+                                <div class="text-lg font-bold text-white leading-tight"
+                                    style="font-family: 'Bauhaus Soft', cursive;">Book Consult</div>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white transform group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                    </path>
+                                </svg>
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- Bottom Bar -->
+                <div
+                    class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest text-white/30 font-medium">
+                    <div>&copy; 2026 Harmony Neurocare Inc.</div>
+                    <div class="flex gap-6">
+                        <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                        <a href="#" class="hover:text-white transition-colors">Terms</a>
+                        <a href="#" class="hover:text-white transition-colors">Sitemap</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
