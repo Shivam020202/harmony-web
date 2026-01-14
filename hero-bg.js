@@ -141,8 +141,8 @@ const fragmentShader = `
         finalColor = mix(finalColor, uColorHighlight, highlightMask * 0.3);
 
         // --- TEXTURE ---
-        float grain = random(uv * uTime) * 0.08;
-        finalColor += grain - 0.04;
+        float grain = random(uv * uTime) * 0.13;
+        finalColor += grain - 0.065;
 
         // Soft Vignette
         float vignette = length(vUv - 0.5);

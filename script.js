@@ -71,25 +71,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Mobile Menu Toggle (Updated IDs)
   const hamburger = document.getElementById("nav-hamburger");
-  const navMenu = document.getElementById("nav-menu");
-  // Previously .nav-links, now #nav-menu is the ul.
-  // Wait, in new HTML #nav-menu is hidden md:flex.
-  // If we want mobile menu, we need to toggle a class that shows it.
-  // The CSS for .mobile-open likely targets .nav-links.
-  // My new HTML uses #nav-menu. I should check if I need to add mobile styles.
-  // Ideally, I should keep the specific mobile menu logic simple.
+  const mobileMenu = document.getElementById("mobile-menu-overlay");
+  const navMenu = document.getElementById("nav-menu"); // Desktop menu
 
-  if (hamburger && navMenu) {
+  if (hamburger && mobileMenu) {
     hamburger.addEventListener("click", () => {
-      navMenu.classList.toggle("mobile-open"); // Ensure CSS supports this or add utility
-      hamburger.classList.toggle("toggle");
+      // Toggle Menu visibility
+      const isOpen = mobileMenu.classList.contains("translate-x-0");
 
-      // If mobile menu is open, ensure background is solid white even at top
-      if (navMenu.classList.contains("mobile-open")) {
-        nav.classList.remove("bg-transparent");
-        nav.classList.add("bg-white");
-        nav.classList.add("text-primary");
+      if (isOpen) {
+        // CLOSE
+        mobileMenu.classList.remove("translate-x-0");
+        mobileMenu.classList.add("translate-x-full");
+        hamburger.classList.remove("toggle");
+        document.body.style.overflow = ""; // Restore scrolling
+
+        // Reset animations
+        mobileMenu
+          .querySelectorAll(".mobile-link, .mobile-footer")
+          .forEach((el) => {
+            el.classList.remove("opacity-100", "translate-y-0");
+            el.classList.add("opacity-0", "translate-y-8");
+          });
+      } else {
+        // OPEN
+        mobileMenu.classList.remove("translate-x-full");
+        mobileMenu.classList.add("translate-x-0");
+        hamburger.classList.add("toggle");
+        document.body.style.overflow = "hidden"; // Lock scrolling
+
+        // Trigger animations with slight delay
+        setTimeout(() => {
+          mobileMenu
+            .querySelectorAll(".mobile-link, .mobile-footer")
+            .forEach((el) => {
+              el.classList.remove("opacity-0", "translate-y-8");
+              el.classList.add("opacity-100", "translate-y-0");
+            });
+        }, 300);
       }
+    });
+
+    // Close Button Logic
+    const closeBtn = document.getElementById("mobile-menu-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        mobileMenu.classList.remove("translate-x-0");
+        mobileMenu.classList.add("translate-x-full");
+        hamburger.classList.remove("toggle");
+        document.body.style.overflow = "";
+
+        // Reset animations
+        mobileMenu
+          .querySelectorAll(".mobile-link, .mobile-footer")
+          .forEach((el) => {
+            el.classList.remove("opacity-100", "translate-y-0");
+            el.classList.add("opacity-0", "translate-y-8");
+          });
+      });
+    }
+
+    // Close on link click
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("translate-x-0");
+        mobileMenu.classList.add("translate-x-full");
+        hamburger.classList.remove("toggle");
+        document.body.style.overflow = "";
+      });
     });
   }
 
@@ -101,9 +150,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (target) {
         target.scrollIntoView({ behavior: "smooth" });
         // Close menu
-        if (navMenu && navMenu.classList.contains("mobile-open")) {
-          navMenu.classList.remove("mobile-open");
+        const mobileMenu = document.getElementById("mobile-menu-overlay");
+        if (mobileMenu && mobileMenu.classList.contains("translate-x-0")) {
+          // Trigger the existing close logic, or just manually close it here to be safe
+          mobileMenu.classList.remove("translate-x-0");
+          mobileMenu.classList.add("translate-x-full");
           if (hamburger) hamburger.classList.remove("toggle");
+          document.body.style.overflow = "";
         }
       }
     });
